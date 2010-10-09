@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
+    <head>
+
+        <title>Google docs MVC demo</title>
+
+        <script type="text/javascript" src="js/oops.js"></script>
+        <script type="text/javascript" src="js/modelo.js"></script>
+        <script type="text/javascript" src="js/vista.js"></script>
+        <script type="text/javascript" src="js/controlador.js"></script>
+        
+        <script type="text/javascript">
+//<![CDATA[
+
+console = window.console || { log: function(){} };
+
+function init()
+{
+    var google = new MVCGooogleDocs.Vista( document.getElementById("google_docs") );
+    var mod = new MVCGooogleDocs.Modelo();
+    var contGoogle = new MVCGooogleDocs.Controlador( google, mod );
+}
+
+window.onload=init;
+
+//]]>
+        </script>
+
+    </head>
+
+    <body>
+
+<div id="google_docs">
+    <button> Cargar datos </button>
+    <ul><li/></ul>                    
+</div>    
+    
+    </body>
+</html>

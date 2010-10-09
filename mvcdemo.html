@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
+    <head>
+
+        <title>MVC Demo</title>
+
+        <script type="text/javascript">
+//<![CDATA[
+if ( console === undefined ) {
+    console = {
+        log: function(m){}
+    };
+}
+//]]>
+        </script>
+        <script type="text/javascript">
+//<![CDATA[
+var Oops = {
+    clone: function( obj ) {
+        var $ = function(){};
+        $.prototype = obj; 
+        return new $();
+    },
+    constructor: function( p ){
+
+        var result = null;
+        var base = null;
+
+        if ( p.init === undefined ) {
+            result = function(){};
+        }
+        else {
+            result = p.init;
+        }
+        
+        if ( p.base === undefined ) {
+            base = Object;
+        }
+        else {
+            base = p.base;
+        }
+        
+        result.prototype = new base();
+
+        if ( p.augment !== undefined ) {
+            for( i in p.augment ) {
+                var clazz = p.augment[i];
+                for( m in clazz.prototype )
+                    result.prototype[m] = clazz.prototype[m];
+            }
+        }
+
+        if (p.proto !== undefined) { 
+            p.proto( result.prototype );
+        }
+        
+        return result;
+    }
+};
+//]]>
+        </script>
+
+        <script type="text/javascript">
+//<![CDATA[
+MVCSimple = { //Namespace
+
+Vista : Oops.constructor({
+    init: function( p, m ) {
+        this.panel = p;
+        this.mensaje = m;
+    },
+    proto: function(p) {
+        p.dibujar = function() {
+            this.panel.innerHTML = this.mensaje;
+        }
+    }
+})
+
+}
+//]]>
+        </script>
+
+        <script type="text/javascript">
+//<![CDATA[
+MVCEvento = {};
+
+MVCEvento.SubsVistaInterface = Oops.constructor({
+    proto: function(p) {
+        p.alClickEnMensaje = function() {
+            console.log("click en mensaje");
+        };
+    }
+});
+
+MVCEvento.Vista =  Oops.constructor({
+    init: function( b ) {
+        this.boton = b;
+        this.subscriptor = new MVCEvento.SubsVistaInterface;
+        var self = this;
+
+        this.boton.onclick = function() {
+            self.subscriptor.alClickEnMensaje();
+        };
+
+    },
+    proto: function(p) {
+        p.setSubscriptor = function( obj ) {
+            this.subscriptor = obj;
+        };
+    }
+});
+
+MVCEvento.Controlador = Oops.constructor({
+    base: MVCEvento.SubsVistaInterface,
+    init: function( v ) {
+        v.setSubscriptor( this );
+    },
+    proto: function(p) {
+        p.alClickEnMensaje = function() {
+            //console.log("click en mensaje (controlador)");
+            alert("Auch!");
+        };
+    }
+});
+
+MVCEvento.ControladorClase = Oops.constructor({
+    base: MVCEvento.SubsVistaInterface,
+    init: function( v ) {
+        v.setSubscriptor( this );
+    },
+    proto: function(p) {
+        p.alClickEnMensaje = function() {
+            console.log("click en mensaje (controlador)");
+            
+        };
+    }
+});
+//]]>
+        </script>
+
+        <script type="text/javascript">
+//<![CDATA[
+MVCGooogleDocs = {};
+
+MVCGooogleDocs.SubsVistaInterface = Oops.constructor({
+    proto: function(p) {
+        p.alClickCargar = function() {
+            console.log("alClickCargar");
+        };
+    }
+});
+
+MVCGooogleDocs.SubsModeloInterface = Oops.constructor({
+    proto: function(p) {
+        p.alRecibirDias = function( dias ) {
+            console.log("alRecibirDias!");
+        };
+    }
+});
+
+MVCGooogleDocs.Vista =  Oops.constructor({
+    init: function( panel ) {
+        this.panel = panel;
+        this.boton = panel.getElementsByTagName("button")[0];
+        this.subscriptor = new MVCGooogleDocs.SubsVistaInterface;
+        var self = this;
+
+        this.boton.onclick = function() {
+            self.subscriptor.alClickCargar();
+        };
+
+    },
+    proto: function(p) {
+        p.setSubscriptor = function( obj ) {
+            this.subscriptor = obj;
+        };
+        p.mostrarDias = function( dias ) {
+            var contenido = "";
+            for (d in dias)
+                contenido = contenido + "<li>" + dias[d] + "</li>";
+
+            this.panel.getElementsByTagName("ul")[0].innerHTML = contenido;
+        };
+    }
+});
+
+MVCGooogleDocs.Controlador = Oops.constructor({
+    init: function( v, m ) {
+        v.setSubscriptor( this );
+        m.setSubscriptor( this );
+        this.modelo = m;
+        this.vista = v;
+    },
+    augment: [ MVCGooogleDocs.SubsVistaInterface, MVCGooogleDocs.SubsModeloInterface ],
+    proto: function(p) {
+        p.alClickCargar = function() {
+            console.log("click en mensaje (controlador)");
+            this.modelo.obtenerDias();
+        };
+        p.alRecibirDias = function(dias) {
+            console.log("click en mensaje (controlador)");
+            // Transformar los datos
+            this.vista.mostrarDias(dias);
+        };
+    }
+});
+
+MVCGooogleDocs.Modelo = Oops.constructor({
+    init: function() {
+        this.subscriptor = new MVCGooogleDocs.SubsModeloInterface();
+    },
+    proto: function(p) {
+        p.setSubscriptor = function(obj) {
+            this.subscriptor = obj;
+        };
+        p.recibirDatos = function(root) {
+            console.log(root);
+            this.subscriptor.alRecibirDias(null);
+        };
+        p.obtenerDias = function() {
+            var self = this;
+            MVCGooogleDocs.callback = function(root) {
+
+                var rows = root.table.rows;
+                var result = [];
+
+                for ( r in rows ) {
+                    result.push( rows[r].c[0].v );
+                }
+
+                self.subscriptor.alRecibirDias(result);
+            }
+
+            // Leer de google docs
+            var e = document.createElement("script");
+            e.src = 'http://spreadsheets.google.com/tq?tqx=responseHandler:MVCGooogleDocs.callback&tq=select%20A&key=tvL0_bf3YSbCW9dmKBU0neg&pub=1';
+            e.type="text/javascript";
+            document.getElementsByTagName("head")[0].appendChild(e); 
+        };
+    }
+});
+
+
+//]]>
+        </script>
+
+        <script type="text/javascript">
+//<![CDATA[
+function init()
+{
+
+    var msj = new MVCSimple.Vista( document.getElementById("mensaje"), "XXXXXX" );
+    msj.dibujar();
+
+    var btn = new MVCEvento.Vista( document.getElementById("boton") );
+    //var contBtn = new MVCEvento.Controlador( btn );
+    var contBtn = new MVCEvento.ControladorClase( btn );
+
+    var google = new MVCGooogleDocs.Vista( document.getElementById("google_docs") );
+    var mod = new MVCGooogleDocs.Modelo();
+    var contGoogle = new MVCGooogleDocs.Controlador( google, mod );
+
+}
+
+window.onload=init;
+
+//]]>
+        </script>
+
+    </head>
+
+    <body>
+
+        <table>
+            <tr>
+                <td>Hola Mundo</td>
+                <td>Dialogo</td>
+                <td>Actualización Panel</td>
+            </tr>
+            <tr>
+                <td><div id="mensaje"></div></td>
+                <td><div id="boton"> <button> Mensaje </button> </div></td>
+                <td><div id="google_docs">
+                    <button> Cargar datos </button>
+                    <ul><li/></ul>                    
+                </div></td>
+            </tr>
+        </table>
+        
+    </body>
+</html>
+
