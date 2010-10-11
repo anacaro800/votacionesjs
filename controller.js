@@ -2,6 +2,7 @@ jQuery.extend({
 
 	Controller: function(model, view){
 	    var finales;
+	    var parent = {};
 	    $("#console").ajaxStop(function() {
 		for (var key in finales )
 		    view.message(key+" = "+finales[key]);
@@ -24,22 +25,24 @@ jQuery.extend({
 		 */
 	    var mlist = $.ModelListener({
 		loadBegin : function() {
+			// Esto no importa
 		    view.message("Fetching Data...");
 		},
 		loadFinish : function(result) {
-		    if (result['type'] == 'keys') {
-			view.message(result['title']+" => Parent: "+result['parent']);
-			for ( key in result['data'] ) {
-			    model.getAll(result['data'][key], result['parent']);
+			// Aqui esta el problema.
+			//De alguna manera hay que meter en un diccionario cosas del tipo: resultados[result['title']].push(hijo) algo asi
+			//pero me falla la creatividad :)
+			if (result['type'] == 'keys') {
+			    for ( key in result['data'] ) {
+				model.getAll(result['data'][key]);
+			    }
+			} else {
+			    // Aqui cuando es mesa pues se guarda el resultado en finales y al final de todo se llama una funcion que recorre esto.
+			    // la funcion esta por alla arriba.
+			    finales = result['data'];
 			}
-		    } else {
-			finales = result['data'];
-			// for ( key in result['data'] )
-			//     view.message(result['data'][key])
-			;
-		    }
-		},
-	    });
+		    },
+		});
 	    model.addListener(mlist);
 	}
 	
