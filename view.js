@@ -14,7 +14,6 @@ jQuery.extend({
 		 * a box to put our incoming messages
 		 */
 		var $messages = $("<div style='height:600px; overflow: auto;'></div>");
-
 		/**
 		 * show a simple text-only message
 		 * in the view
@@ -22,7 +21,23 @@ jQuery.extend({
 		this.message = function(str){
 			$messages.append(str + "<br>");
 		}
-		
+
+		this.createTable = function(resultados){
+		    var $table = $("<table></table>");
+		    for (name in resultados['parents']) {
+			//alert();
+			var $parent = $("#"+resultados['parents'][name]);
+			for (var son in resultados[resultados['parents'][name]]) {
+			    if ($parent) {
+				$parent.append("<tr><td id='"+resultados[resultados['parents'][name]][son]+"'>"+resultados[resultados['parents'][name]][son]+"</td><tr>");
+			    } else {
+				$table.append("<tr><td id='"+resultados['parents'][name]+"'>"+resultados['parents'][name]+"</td><tr>");
+			    }
+			}
+		    }
+
+		    $console.append($table);
+		}
 		/**
 		 * set up the buttons to load data
 		 */
@@ -31,7 +46,6 @@ jQuery.extend({
 		    that.notifyAllClicked(key);
 		}));
 		$console.append($messages);
-		
 		
 		/**
 		 * add a listener to this view

@@ -1,0 +1,64 @@
+<html>
+<head>
+<script src="jquery-1.4.2.js" type="text/javascript"></script>
+<script src="model.js" type="text/javascript"></script>
+<script src="view.js" type="text/javascript"></script>
+<script src="controller.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$(function(){
+		var model = new $.Model();
+		var view = new $.View($("#console"));
+		var controller = new $.Controller(model, view);
+	});
+</script>
+<title>Consolidado de Votaciones</title>
+<link rel="stylesheet" href="hojaestilo.css">
+</head>
+<body>
+<table width="500" border="1" align="center">
+  <tr>
+    <td><img src="Imagen2.png" width="786" height="113"></td>
+  </tr>
+  <tr>
+    <td><h1>Informaci&oacute;n</h1>
+      <p>Este sistema le permite agrupar informacion sobre votaciones que se encuentran distribuidas en documentos de google docs, para lo cual necesita el &quot;key&quot; de la primera hoja de calculos del pais, donde se encuentran los keys del las distintas locaciones, ingrese el key del pais correspondiente y presione el boton para obtener los resultados</p>
+      <h2>Ingresar los datos:</h2>
+      <p>Escriba el Key del Documento perteneciente al pais 
+        <input type="text" id="key"/>
+      </p></td>
+  </tr>
+  <tr>
+    <td><div id="console">
+      <p>Obtener Resultados</p> </div>
+      <table width="500" border="1" id="contenido">
+        <tr>
+          <th scope="col"><h3>Pais</h3></th>
+          <th scope="col"><h3>Departamento</h3></th>
+          <th scope="col"><h3>Ciudad</h3></th>
+          <th scope="col"><h3>Zona</h3></th>
+          <th scope="col"><h3>Mesa</h3></th>
+          <th scope="col"><h3>Totales</h3></th>
+        </tr>
+        <tr>
+          <td>pa poner los resultados :)</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+      </table>
+      <p>&nbsp;      </p>
+    </td>
+  </tr>
+  <tr>
+    <td><h1>&nbsp;</h1>
+      <h1>Informaci&oacute;n Adicional</h1>
+    <p>Este sistema fue elaborado por Alejandro Cadavid Lopez y Ana Carolina Alvarez, estudiantes de Ingenier&iacute;a de Sistemas de la universidad EAFIT.</p></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+</body>
+</html>

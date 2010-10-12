@@ -2,10 +2,12 @@ jQuery.extend({
 
 	Controller: function(model, view){
 	    var finales;
-	    var parent = {};
+	    var resultados = {'parents':[]};
 	    $("#console").ajaxStop(function() {
-		for (var key in finales )
-		    view.message(key+" = "+finales[key]);
+		    for (var key in finales ){
+			view.message(key+" = "+finales[key]);
+		    }
+		    view.createTable(resultados);
 	    });
 		/**
 		 * listen to the view
@@ -29,16 +31,16 @@ jQuery.extend({
 		    view.message("Fetching Data...");
 		},
 		loadFinish : function(result) {
-			// Aqui esta el problema.
-			//De alguna manera hay que meter en un diccionario cosas del tipo: resultados[result['title']].push(hijo) algo asi
-			//pero me falla la creatividad :)
+			resultados['parents'].push(result['title']);
 			if (result['type'] == 'keys') {
 			    for ( key in result['data'] ) {
 				model.getAll(result['data'][key]);
 			    }
+			    //for ( i in result[result['title']]) {
+			    //view.row(result['type'],result['title'],result[result['title']][i],result['data']);
+			    //}
 			} else {
-			    // Aqui cuando es mesa pues se guarda el resultado en finales y al final de todo se llama una funcion que recorre esto.
-			    // la funcion esta por alla arriba.
+			    //view.message(result['title']+" => resultaos: "+result['data']);
 			    finales = result['data'];
 			}
 		    },

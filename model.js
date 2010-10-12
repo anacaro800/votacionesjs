@@ -26,6 +26,7 @@ jQuery.extend({
 		    result['type'] = '';
 		    result['data'] = [];
 		    result['title'] = '';
+		    result['sons'] = [];
 		    var found = false;
 		    // Aqui leemos la primera.
 
@@ -33,19 +34,25 @@ jQuery.extend({
 		    // Entonces al final pasamos las sumas de los resultados y no los keys.
 		    if (rows[0].c[0].v == 'mesa') {
 			result['type'] = 'mesa';
+			result['title'] = "mesa "+rows[0].c[1].v;
 		    } else {
 			result['type'] = 'keys';
+			result['title'] = rows[0].c[1].v;
 		    }
 		    
 
 		    // La idea de esta variable es guardar el nombre de la ciudad o el dpt, o etc.
-		    result['title'] = rows[0].c[1].v;
+
 
 		    for (i=0; i<rows.length; i++) {
 			if (found){
 			    // En caso de ser keys, las mete en data y se las pasa al controlador pa seguir iterando
+			    if (result[result['title']] == undefined) {
+				result[result['title']] = [];
+			    }
 			    if (result['type'] == 'keys'){
 				result['data'].push( rows[i].c[1].v );
+				result[result['title']].push( rows[i].c[0].v );
 			    } else {
 				// En este caso hace la suma de los resultados. totales[candidato] += votos
 				totales[rows[i].c[0].v] += rows[i].c[1].v;
