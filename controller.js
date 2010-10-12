@@ -2,7 +2,7 @@ jQuery.extend({
 
 	Controller: function(model, view){
 	    var finales;
-	    var resultados = {'parents':[]};
+	    var resultados = {'parents':[], 'sons':{}};
 	    $("#console").ajaxStop(function() {
 		    for (var key in finales ){
 			view.message(key+" = "+finales[key]);
@@ -31,16 +31,18 @@ jQuery.extend({
 		    view.message("Fetching Data...");
 		},
 		loadFinish : function(result) {
-			resultados['parents'].push(result['title']);
 			if (result['type'] == 'keys') {
+			    resultados['parents'].push(result['title']);
+			    if ( resultados['sons'][result['title']] == undefined ) {
+				resultados['sons'][result['title']] = [];
+				resultados['sons'][result['title']] = result[result['title']];
+			    } else {
+				resultados['sons'][result['title']] = result[result['title']];
+			    }
 			    for ( key in result['data'] ) {
 				model.getAll(result['data'][key]);
 			    }
-			    //for ( i in result[result['title']]) {
-			    //view.row(result['type'],result['title'],result[result['title']][i],result['data']);
-			    //}
 			} else {
-			    //view.message(result['title']+" => resultaos: "+result['data']);
 			    finales = result['data'];
 			}
 		    },
