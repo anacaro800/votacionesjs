@@ -36,8 +36,6 @@ jQuery.extend({
 			    if ( resultados['sons'][result['title']] == undefined ) {
 				resultados['sons'][result['title']] = [];
 				resultados['sons'][result['title']] = result[result['title']];
-			    } else {
-				resultados['sons'][result['title']] = result[result['title']];
 			    }
 			    for ( key in result['data'] ) {
 				model.getAll(result['data'][key]);

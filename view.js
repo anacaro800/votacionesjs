@@ -13,7 +13,7 @@ jQuery.extend({
 		/**
 		 * a box to put our incoming messages
 		 */
-		var $messages = $("<div style='height:600px; overflow: auto;'></div>");
+		var $messages = $("<div></div>");
 		/**
 		 * show a simple text-only message
 		 * in the view
@@ -25,31 +25,19 @@ jQuery.extend({
 		this.createTable = function(resultados){
 		    var $parent = undefined;
 		    var $table = $("<div id='main'></div>");
-		    for (name in resultados['parents']) {
-			var nombre = resultados['parents'][name];
-			//alert(nombre);
-			//alert(resultados['sons'][nombre]);
-			var $exists = $("#"+nombre);
-			if ($exists.length > 0) {
-			    //alert("padre existe: "+nombre);
-			    $parent = $exists;
+		    for (var parent in resultados['sons']) {
+			//alert("El padre es: "+parent);
+			if ($("#"+parent).length > 0) {
+			    //alert("Encontro a padre: "+parent);
+			    var $padre = $("#"+parent);
 			} else {
-			    $parent = $("<div id='"+nombre+"'><h1>"+nombre+"</h1></div>");
-			    $table.append($parent);
+			    var $padre = $("<div id='"+parent+"'><h1>"+parent+"</h1></div>");
+			    $table.append($padre);
 			}
-			for (sons in resultados['sons'][nombre]) {
-			    var existss = $("#"+resultados['sons'][nombre][sons]);
-			    if (existss.length > 0) {
-				$parent.append(existss);
-				existss.remove();
-			    } else {
-				$parent.append("<div id='"+resultados['sons'][nombre][sons]+"'><h1>"+resultados['sons'][nombre][sons]+"</h1></div>");
-			    }
-			    //if ($parent.length != 0) {
-			    //
-			    //   } else {
-			    //}
-			    //alert(resultados['sons'][nombre][sons]);
+			for (var son in resultados['sons'][parent]) {
+			    //alert("Crea el hijo: "+resultados['sons'][parent][son]);
+			    var $hijo = $("<div id='"+resultados['sons'][parent][son]+"'><h1>"+resultados['sons'][parent][son]+"</h1></div>");
+			    $padre.append($hijo);
 			}
 		    }
 		    $console.append($table);
@@ -57,7 +45,7 @@ jQuery.extend({
 		/**
 		 * set up the buttons to load data
 		 */
-		$console.append($("<input type='button' value='Load All'></input>").click(function(){
+		$console.append($("<input type='button' value='Cargar Datos'></input>").click(function(){
 		    var key = $('#key').val();
 		    that.notifyAllClicked(key);
 		}));
