@@ -23,29 +23,34 @@ jQuery.extend({
 		}
 
 		this.createTable = function(resultados){
-		    var $parent;
+		    var $parent = undefined;
 		    var $table = $("<div id='main'></div>");
 		    for (name in resultados['parents']) {
 			var nombre = resultados['parents'][name];
 			//alert(nombre);
 			//alert(resultados['sons'][nombre]);
-			$parent = $("#"+nombre);
+			var $exists = $("#"+nombre);
+			if ($exists.length > 0) {
+			    //alert("padre existe: "+nombre);
+			    $parent = $exists;
+			} else {
+			    $parent = $("<div id='"+nombre+"'><h1>"+nombre+"</h1></div>");
+			    $table.append($parent);
+			}
 			for (sons in resultados['sons'][nombre]) {
-			    $table.append("<div id='"+resultados['sons'][nombre][sons]+"'><h1>"+resultados['sons'][nombre][sons]+"</h1></div>");
+			    var existss = $("#"+resultados['sons'][nombre][sons]);
+			    if (existss.length > 0) {
+				$parent.append(existss);
+				existss.remove();
+			    } else {
+				$parent.append("<div id='"+resultados['sons'][nombre][sons]+"'><h1>"+resultados['sons'][nombre][sons]+"</h1></div>");
+			    }
+			    //if ($parent.length != 0) {
+			    //
+			    //   } else {
+			    //}
 			    //alert(resultados['sons'][nombre][sons]);
 			}
-			//  for (son in resultados['sons'][nombre][sons]) {
-			//
-			//  }
-			//alert(resultados['sons'][nombre][son]);
-			//
-			//if ($parent != undefined) {
-			//$parent.append("<div id='"+resultados['sons'][nombre][son]+"'><h1>"+resultados['sons'][nombre][son]+"</h1></div>");
-			//} else {
-			//$table.append("<div id='"+resultados['sons'][nombre][son]+"'><h1>"+resultados['sons'][nombre][son]+"</h1></div>");
-			// $table.append("<div id='"+resultados['parents'][name]+"'><h1>"+resultados['parents'][name]+"</h1></div>");
-			//}			
-			//}
 		    }
 		    $console.append($table);
 		}
