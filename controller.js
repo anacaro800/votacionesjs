@@ -4,9 +4,7 @@ jQuery.extend({
 	    var finales;
 	    var resultados = {'parents':[], 'sons':{}};
 	    $("#console").ajaxStop(function() {
-		    for (var key in finales ){
-			view.message(key+" = "+finales[key]);
-		    }
+		 	view.createConsolidado(finales); 
 		    view.createTable(resultados);
 	    });
 		/**

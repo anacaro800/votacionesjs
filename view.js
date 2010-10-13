@@ -21,6 +21,16 @@ jQuery.extend({
 		this.message = function(str){
 			$messages.append(str + "<br>");
 		}
+		
+		this.createConsolidado = function(finales){
+			var $html = $("<br><table width='500'><tr><th colspan='2' scope='col'><h1>VOTOS TOTALES POR CANDIDATO</h1></th></tr><tr><td width='243' class='contenido'><h2>Candidato</h2></td><td width='241' class='contenido'><h2>Votos</h2></td></tr>");
+			  for (var key in finales ){
+			$html.append("<tr><td class='contenido'>"+key+"</td><td class='contenido'>"+finales[key]+" votos"+"</td></tr>");
+		    }
+			$html.append("</table>");
+			//$messages.append(str + "<br>");
+			$console.append($html);
+		}
 
 		this.createTable = function(resultados){
 		    var $parent = undefined;
@@ -31,12 +41,12 @@ jQuery.extend({
 			    //alert("Encontro a padre: "+parent);
 			    var $padre = $("#"+parent);
 			} else {
-			    var $padre = $("<div id='"+parent+"'><h1>"+parent+"</h1></div>");
+			    var $padre = $("<div id='"+parent+"'><h2>"+parent+"</h2></div>");
 			    $table.append($padre);
 			}
 			for (var son in resultados['sons'][parent]) {
 			    //alert("Crea el hijo: "+resultados['sons'][parent][son]);
-			    var $hijo = $("<div id='"+resultados['sons'][parent][son]+"'><h1>"+resultados['sons'][parent][son]+"</h1></div>");
+			    var $hijo = $("<div id='"+resultados['sons'][parent][son]+"'><p>"+resultados['sons'][parent][son]+"</p></div>");
 			    $padre.append($hijo);
 			}
 		    }

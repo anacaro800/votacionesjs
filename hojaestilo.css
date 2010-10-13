@@ -2,15 +2,20 @@ body {
 	background-color: #330000;
 }
 
-body, td, th, p ,table{
+div{
+padding-left:2%;
+}
+
+body, td, th, p {
 	color: #FFCC99;
 	font-family: Calibri;
     font-size:15px;
 	text−align:justify;
-	border:0;
 }
-#contenido {
-   border: 1px solid #fff;
+.contenido {
+text-align:center;
+
+   border: 2px solid #fff;
 }
 
 h1 {
@@ -23,7 +28,7 @@ h1 {
 h2 {
 	color: #FF99CC;
 	font-family: Calibri;
-    font-size:16px;
+    font-size:17px;
 }
 
 h3, h4 {
