@@ -7,7 +7,7 @@
 <script type="text/javascript">
 	$(function(){
 		var model = new $.Model();
-		var view = new $.View($("#console"));
+		var view = new $.View($("#console"), $("#hiddenconsole"));
 		var controller = new $.Controller(model, view);
 	});
 </script>
@@ -29,6 +29,10 @@
   </tr>
   <tr>
     <td><div id="console"></div>
+      <p>&nbsp;      </p>
+    </td>
+
+    <td><div id="hiddenconsole" style="visibility:hidden;">Hola</div>
       <p>&nbsp;      </p>
     </td>
   </tr>

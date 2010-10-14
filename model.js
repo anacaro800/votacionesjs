@@ -27,6 +27,7 @@ jQuery.extend({
 		    result['data'] = [];
 		    result['title'] = '';
 		    result['sons'] = [];
+		    result['mesas'] = {};
 		    var found = false;
 		    // Aqui leemos la primera.
 
@@ -55,6 +56,7 @@ jQuery.extend({
 				result[result['title']].push( rows[i].c[0].v );
 			    } else {
 				// En este caso hace la suma de los resultados. totales[candidato] += votos
+				result[result['title']].push([rows[i].c[0].v+": "+rows[i].c[1].v]);
 				totales[rows[i].c[0].v] += rows[i].c[1].v;
 			    }
 			}

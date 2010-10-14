@@ -1,6 +1,6 @@
 jQuery.extend({
 
-	View: function($console){
+    View: function($console, $hiddenconsole){
 		/**
 		 * keep a reference to ourselves
 		 */
@@ -37,18 +37,19 @@ jQuery.extend({
 		    var $table = $("<div id='main'></div>");
 		    for (var parent in resultados['sons']) {
 			//alert("El padre es: "+parent);
-			if ($("#"+parent).length > 0) {
+			if ($("#"+parent.replace(/ /g,'')).length > 0) {
 			    //alert("Encontro a padre: "+parent);
-			    var $padre = $("#"+parent);
+			    var $padre = $("#"+parent.replace(/ /g,''));
 			} else {
-			    var $padre = $("<div id='"+parent+"'><h2>"+parent+"</h2></div>");
+			    var $padre = $("<div id='"+parent.replace(/ /g,'')+"'><h2>"+parent+"</h2></div>");
 			    $table.append($padre);
 			}
 			for (var son in resultados['sons'][parent]) {
 			    //alert("Crea el hijo: "+resultados['sons'][parent][son]);
-			    var $hijo = $("<div id='"+resultados['sons'][parent][son]+"'><p>"+resultados['sons'][parent][son]+"</p></div>");
+			    var $hijo = $("<div id='"+resultados['sons'][parent][son].replace(/ /g,'')+"'><p>"+resultados['sons'][parent][son]+"</p></div>");
 			    $padre.append($hijo);
 			}
+			$hiddenconsole.append($table);
 		    }
 		    $console.append($table);
 		}

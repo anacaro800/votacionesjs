@@ -2,10 +2,10 @@ jQuery.extend({
 
 	Controller: function(model, view){
 	    var finales;
-	    var resultados = {'parents':[], 'sons':{}};
+	    var resultados = {'parents':[], 'sons':{}, 'partials':{}};
 	    $("#console").ajaxStop(function() {
-		 	view.createConsolidado(finales); 
-		    view.createTable(resultados);
+		view.createConsolidado(finales); 
+		view.createTable(resultados);
 	    });
 		/**
 		 * listen to the view
