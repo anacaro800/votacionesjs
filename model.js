@@ -1,10 +1,6 @@
 jQuery.extend({
 	Model: function(){
 	    /**
-	     * our local cache of data
-	     */
-	    var cache = new Array();
-	    /**
 	     * a reference to ourselves
 	     */
 	    var that = this;
@@ -27,7 +23,6 @@ jQuery.extend({
 		    result['data'] = [];
 		    result['title'] = '';
 		    result['sons'] = [];
-		    result['mesas'] = {};
 		    var found = false;
 		    // Aqui leemos la primera.
 
@@ -40,11 +35,8 @@ jQuery.extend({
 			result['type'] = 'keys';
 			result['title'] = rows[0].c[1].v;
 		    }
-		    
 
 		    // La idea de esta variable es guardar el nombre de la ciudad o el dpt, o etc.
-
-
 		    for (i=0; i<rows.length; i++) {
 			if (found){
 			    // En caso de ser keys, las mete en data y se las pasa al controlador pa seguir iterando
@@ -67,7 +59,7 @@ jQuery.extend({
 			    }
 			}
 		    }
-
+                    
 		    // Data se vuelve los totales cuando se leyo una mesa.
 		    if (result['type'] == 'mesa'){
 			result['data'] = totales;
@@ -75,11 +67,11 @@ jQuery.extend({
 		    } else {
 			that.notifyLoadFinish(result);
 		    }
-		    }
+		}
 		
 		$.getScript('http://spreadsheets.google.com/tq?tqx=responseHandler:mycallback&key='+key+'&pub=1');
 	    }
-		
+	    
 	    /**
 	     * add a listener to this model
 	     */
@@ -88,33 +80,23 @@ jQuery.extend({
 	    }
 	    
 	    /**
-	     * notify everone that we're starting 
-	     * to load some data
-	     */
-	    this.notifyLoadBegin = function(){
-		$.each(listeners, function(i){
-			listeners[i].loadBegin();
-		    });
-	    }
-	    /**
 	     * we're done loading, tell everyone
 	     */
 	    this.notifyLoadFinish = function(keys){
 		$.each(listeners, function(i){
-			listeners[i].loadFinish(keys);
-		    });
+		    listeners[i].loadFinish(keys);
+		});
 	    }
 	    
 	},
-	    
-	    /**
-	     * let people create listeners easily
-	     */
+    
+    /**
+     * let people create listeners easily
+     */
 	    ModelListener: function(list) {
-	    if(!list) list = {};
-	    return $.extend({
-		    loadBegin : function() { },
-			loadFinish : function() { },
-			}, list);
-	}
-    });
+	        if(!list) list = {};
+	        return $.extend({
+		    loadFinish : function() { },
+	        }, list);
+	    }
+});
