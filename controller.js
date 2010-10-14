@@ -39,6 +39,10 @@ jQuery.extend({
 				model.getAll(result['data'][key]);
 			    }
 			} else {
+			    if ( resultados['partials'][result['title']] == undefined ) {
+                                resultados['partials'][result['title']] = []
+                                resultados['partials'][result['title']] = result[result['title']];
+                            }
 			    finales = result['data'];
 			}
 		    },
