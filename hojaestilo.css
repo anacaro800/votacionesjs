@@ -2,8 +2,13 @@ body {
 	background-color: #330000;
 }
 
-div{
-padding-left:2%;
+.data{
+padding:2%;
+border-left: 1px solid #fff;
+}
+
+.result {
+margin-left:2%;
 }
 
 body, td, th, p {

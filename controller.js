@@ -2,9 +2,10 @@ jQuery.extend({
     
     Controller: function(model, view){
 	var finales;
-	var resultados = {'parents':[], 'sons':{}, 'partials':{}};
+	var resultados = {'sons':{}, 'partials':{}};
 	$("#console").ajaxStop(function() {
 	    view.createConsolidado(finales); 
+	    view.createGraph(finales); 
 	    view.createTable(resultados);
 	});
 	/**
@@ -23,7 +24,6 @@ jQuery.extend({
 	var mlist = $.ModelListener({
 	    loadFinish : function(result) {
 		if (result['type'] == 'keys') {
-		    resultados['parents'].push(result['title']);
 		    if ( resultados['sons'][result['title']] == undefined ) {
 			resultados['sons'][result['title']] = [];
 			resultados['sons'][result['title']] = result[result['title']];

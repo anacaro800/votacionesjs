@@ -1,18 +1,23 @@
 <html>
 <head>
 <script src="jquery-1.4.2.js" type="text/javascript"></script>
+<script src="jquery.jqplot.min.js" type="text/javascript"></script>
+<script src="jqplot.categoryAxisRenderer.min.js" type="text/javascript"></script>
+<script src="jqplot.barRenderer.min.js" type="text/javascript"></script>
+<script src="excanvas.min.js" type="text/javascript"></script>
 <script src="model.js" type="text/javascript"></script>
 <script src="view.js" type="text/javascript"></script>
 <script src="controller.js" type="text/javascript"></script>
 <script type="text/javascript">
 	$(function(){
 		var model = new $.Model();
-		var view = new $.View($("#console"), $("#hiddenconsole"));
+		var view = new $.View($("#console"));
 		var controller = new $.Controller(model, view);
 	});
 </script>
 <title>Consolidado de Votaciones</title>
 <link rel="stylesheet" href="hojaestilo.css">
+<link rel="stylesheet" href="jquery.jqplot.css">
 </head>
 <body>
 <table width="500" border="0" align="center">
@@ -29,10 +34,6 @@
   </tr>
   <tr>
     <td><div id="console"></div>
-      <p>&nbsp;      </p>
-    </td>
-
-    <td><div id="hiddenconsole" style="visibility:hidden;">Hola</div>
       <p>&nbsp;      </p>
     </td>
   </tr>
