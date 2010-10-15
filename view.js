@@ -32,8 +32,6 @@ jQuery.extend({
             // Se necesita lista de listas en values
             var values = [];
             values.push(valores);
-            var nombreslist = [];
-            nombreslist.push(nombres);
             $.jqplot('chart', values, {
                 legend:{show:true, location:'ne'},title:'GRAFICA VOTOS TOTALES POR CANDIDATO',
 	        seriesDefaults:{
