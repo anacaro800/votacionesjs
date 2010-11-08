@@ -3,18 +3,26 @@ require "vista"
 
 class Controlador
  
-  attr_accessor :modelo
-  attr_accessor :vista
+  attr_accessor :modelo, :vista, :resultado, :keys, :profundidad
   
   def initialize(modelo,vista)
     @modelo = modelo
     @vista = vista
-    controlar
+    @resultado = []
+    @profundidad = 'pais'
+    @keys = {}
   end
   
   def controlar
     key = @vista.getkey
-    @modelo.obtenerdatos(key)
+    @modelo.obtenerdatos(key, @profundidad)
+    res = @vista.printhtml(@modelo.resultados, @modelo.totales_acumulados)
+    puts "\n\nFINALES!!!!"
+    @resultado.each do |k,v|
+      puts "Papa: "+k
+      puts "Hijos: "+v.join(" ,")
+    end
+    res
   end
   
 end
