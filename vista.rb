@@ -50,18 +50,45 @@ class Vista
     html << "
      %div{:id =>'Main'}
       %h1 TABLA RESULTADOS POR REGIONES"
+    
+    # html << "
+    #   %div{:id=>'#{padre}',:class=>'hyhh'}
+    #    %h2 #{padre}"
+    # unless hijo1.is_a? Hash or hijo1.start_with? "mesa"
+    #   html << "\n       %div #{i}"
+    # else 
 
-    estructura.each do |padre,hijos|
+
+    # res['colombia'] = ['antioquia']
+    # res['antioq'] = ['chigo']
+    # res['chigo'] = ['plaza']
+    # res['plaza'] = ['mesa 1']
+    # res['mesa 1'] = {'jojo' => '1'}
+    estructura.keys.each do |padre|      
+      # padre = colombia
       html << "
-      %div{:id=>'#{padre}',:class=>'hyhh'}
-       %h2 #{padre}"
-
-      hijos.each do |i|
-        unless i.is_a? Hash
-          html << "\n       %div #{i}"
-        end
+        %div{:id=>'#{padre}',:class=>'hyhh'}
+         %h2 #{padre}"
+      estructura[padre].each do |hijo1|
+        # hijo1 = antiouqi
+        html << "\n       %div #{hijo1}"
+        # estructura[hijo1].each do |hijo2|
+        #   # hijo2 = chigo
+        #   html << "\n       %div #{hijo2}
+        #                      %h2 #{hijo2}"
+        #   # estructura[hijo2].each do |hijo3|
+        #   #   # hijo3 = plaza
+        #   #   html << "\n       %div #{hijo3}
+        #   #                      %h2 #{hijo3}"
+        #   #   # estructura[hijo3].each do |hijo4|
+        #   #   #   # hijo4 = mesa1
+        #   #   #   html << "\n       %div #{hijo4}
+        #   #   #                      %h2 #{hijo3}"
+        #   #   # end
+        #   # end
+          
+        # end
       end
-
     end
     
     html << "

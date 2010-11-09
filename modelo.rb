@@ -1,4 +1,3 @@
-# -*- coding: undecided -*-
 require "rubygems"
 require "json"
 require "openssl"
@@ -86,11 +85,11 @@ class Modelo
           #puts "Padre al que se le agregan hijos: "+father
           @resultados[father].push(key['c'][0]['v'])
           #puts "Los hijos: "+@resultados[father].join(" ,")
-          oldfather = father
-          father = key['c'][0]['v']
+          oldfather = father.gsub(" ", "")
+          father = key['c'][0]['v'].gsub(" ", "")
           #puts "Nuevo padre que se pasa a la funcion: "+father
-          obtenerdatos(key['c'][1]['v'], title, father)
-          father = oldfather
+          obtenerdatos(key['c'][1]['v'], title, father.gsub(" ", ""))
+          father = oldfather.gsub(" ", "")
         end
       end
       # puts "\n\nResultados en keys: "
