@@ -16,12 +16,14 @@ class Controlador
   def controlar
     key = @vista.getkey
     @modelo.obtenerdatos(key, @profundidad)
+    puts @modelo.resultados.inspect
     res = @vista.printhtml(@modelo.resultados, @modelo.totales_acumulados)
     puts "\n\nFINALES!!!!"
-    @resultado.each do |k,v|
-      puts "Papa: "+k
-      puts "Hijos: "+v.join(" ,")
-    end
+    
+    # @resultado.each do |k,v|
+    #   puts "Papa: "+k
+    #   puts "Hijos: "+v.join(" ,")
+    # end
     res
   end
   

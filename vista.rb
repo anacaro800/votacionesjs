@@ -13,7 +13,7 @@ class Vista
     @key	
   end
 
-  def printhtml(estructura, totales)
+  def printhtml(est, totales)
     #estructura={"colombia"=>["ant","valle"],"antioquia"=>["chigo","pueblox"]}
     html = "%html
  %head
@@ -50,46 +50,52 @@ class Vista
     html << "
      %div{:id =>'Main'}
       %h1 TABLA RESULTADOS POR REGIONES"
-    
-    # html << "
-    #   %div{:id=>'#{padre}',:class=>'hyhh'}
-    #    %h2 #{padre}"
-    # unless hijo1.is_a? Hash or hijo1.start_with? "mesa"
-    #   html << "\n       %div #{i}"
-    # else 
 
 
+    padre = est.first[0] # Colombia
+    hijos = est.first[1] #  ['antioquia', 'valle']
+    html << "
+      %div{:id => '#{padre}'}
+       %h1 #{padre}"
+    hijos.each do |hijo| #departamentos
+      html << "
+      %div{:id => '#{hijo}'}
+       %h2 #{hijo}"
+      if est.has_key?(hijo)
+        est[hijo].each do |subhijo| #ciudades
+          html << "
+       %div{:id => '#{subhijo}'}
+        %h4 #{subhijo}"
+          if est.has_key?(subhijo)
+            est[subhijo].each do |subhijo1| #centros
+              html << "
+        %div{:id => '#{subhijo1}'}
+         %p #{subhijo1}"
+              if est.has_key?(subhijo1)
+                est[subhijo1].each do |subhijo2| #mesas
+                  html << "
+         %div{:id => '#{subhijo2}'}
+          %p #{subhijo2}"
+                  if est.has_key?(subhijo2)
+                    est[subhijo2].each do |res| #resultados
+                      res.each_pair do |p,v|
+                        html << "
+          %p #{p} = #{v}"
+                      end
+                    end
+                  end
+                end
+              end
+            end
+          end
+        end
+      end
+    end
     # res['colombia'] = ['antioquia']
     # res['antioq'] = ['chigo']
     # res['chigo'] = ['plaza']
     # res['plaza'] = ['mesa 1']
     # res['mesa 1'] = {'jojo' => '1'}
-    estructura.keys.each do |padre|      
-      # padre = colombia
-      html << "
-        %div{:id=>'#{padre}',:class=>'hyhh'}
-         %h2 #{padre}"
-      estructura[padre].each do |hijo1|
-        # hijo1 = antiouqi
-        html << "\n       %div #{hijo1}"
-        # estructura[hijo1].each do |hijo2|
-        #   # hijo2 = chigo
-        #   html << "\n       %div #{hijo2}
-        #                      %h2 #{hijo2}"
-        #   # estructura[hijo2].each do |hijo3|
-        #   #   # hijo3 = plaza
-        #   #   html << "\n       %div #{hijo3}
-        #   #                      %h2 #{hijo3}"
-        #   #   # estructura[hijo3].each do |hijo4|
-        #   #   #   # hijo4 = mesa1
-        #   #   #   html << "\n       %div #{hijo4}
-        #   #   #                      %h2 #{hijo3}"
-        #   #   # end
-        #   # end
-          
-        # end
-      end
-    end
     
     html << "
    %tr
@@ -100,4 +106,5 @@ class Vista
     engine.render
     
   end
+
 end

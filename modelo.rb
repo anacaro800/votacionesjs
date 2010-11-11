@@ -83,7 +83,7 @@ class Modelo
             @resultados[father] = []
           end
           #puts "Padre al que se le agregan hijos: "+father
-          @resultados[father].push(key['c'][0]['v'])
+          @resultados[father].push(key['c'][0]['v'].gsub(" ", ""))
           #puts "Los hijos: "+@resultados[father].join(" ,")
           oldfather = father.gsub(" ", "")
           father = key['c'][0]['v'].gsub(" ", "")
