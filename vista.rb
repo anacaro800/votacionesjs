@@ -1,20 +1,25 @@
 require "rubygems"
 require "haml"
+require "gchart"
 
 class Vista
 
   attr_accessor :key
   
-  def initialize(env)
-    @key = env["QUERY_STRING"].split("=")[1]
+  def initialize(req)
+    @key = req.params["key"]
   end
   
   def getkey
     @key	
   end
 
+  def graficar(totales)
+    Gchart.pie_3d(:title => 'RESULTADOS TOTALES', :size => '400x200',
+                  :data => totales.values, :labels => totales.keys)
+  end
+
   def printhtml(est, totales)
-    #estructura={"colombia"=>["ant","valle"],"antioquia"=>["chigo","pueblox"]}
     html = "%html
  %head
   %link{:rel=>'stylesheet',:href=>'hojaestilo.css'}
@@ -47,35 +52,39 @@ class Vista
        %td{:class=>'contenido'}#{votos}"
     end
 
+    # html << "%img{:src=>'"
+    # html << graficar(totales)
+    # html << "',:width=>'400',:height=>'200'}"
+    
     html << "
-     %div{:id =>'Main'}
+     %div{:id =>'main', :class => 'data'}
       %h1 TABLA RESULTADOS POR REGIONES"
 
 
     padre = est.first[0] # Colombia
     hijos = est.first[1] #  ['antioquia', 'valle']
     html << "
-      %div{:id => '#{padre}'}
+      %div{:id => '#{padre}', :class => 'data'}
        %h1 #{padre}"
     hijos.each do |hijo| #departamentos
       html << "
-      %div{:id => '#{hijo}'}
+      %div{:id => '#{hijo}', :class => 'data'}
        %h2 #{hijo}"
       if est.has_key?(hijo)
         est[hijo].each do |subhijo| #ciudades
           html << "
-       %div{:id => '#{subhijo}'}
-        %h4 #{subhijo}"
+       %div{:id => '#{subhijo}', :class => 'data'}
+        %h5 #{subhijo}"
           if est.has_key?(subhijo)
             est[subhijo].each do |subhijo1| #centros
               html << "
-        %div{:id => '#{subhijo1}'}
-         %p #{subhijo1}"
+        %div{:id => '#{subhijo1}', :class => 'data'}
+         %h3 #{subhijo1}"
               if est.has_key?(subhijo1)
                 est[subhijo1].each do |subhijo2| #mesas
                   html << "
-         %div{:id => '#{subhijo2}'}
-          %p #{subhijo2}"
+         %div{:id => '#{subhijo2}', :class => 'data'}
+          %h4 #{subhijo2}"
                   if est.has_key?(subhijo2)
                     est[subhijo2].each do |res| #resultados
                       res.each_pair do |p,v|
@@ -91,11 +100,6 @@ class Vista
         end
       end
     end
-    # res['colombia'] = ['antioquia']
-    # res['antioq'] = ['chigo']
-    # res['chigo'] = ['plaza']
-    # res['plaza'] = ['mesa 1']
-    # res['mesa 1'] = {'jojo' => '1'}
     
     html << "
    %tr

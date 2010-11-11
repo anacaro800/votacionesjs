@@ -21,7 +21,6 @@ class Modelo
   def obtenerdatos(key, profundidad, father="colombia")
     resultados_parciales = {}
     return if key.nil?
-    puts "Key: "+key
     # HTTP Request
     url_old = 'http://spreadsheets.google.com/tq?key='+key+'&pub=1'
     url = URI.parse(url_old)
@@ -83,13 +82,13 @@ class Modelo
             @resultados[father] = []
           end
           #puts "Padre al que se le agregan hijos: "+father
-          @resultados[father].push(key['c'][0]['v'].gsub(" ", ""))
+          @resultados[father].push(key['c'][0]['v'])
           #puts "Los hijos: "+@resultados[father].join(" ,")
-          oldfather = father.gsub(" ", "")
-          father = key['c'][0]['v'].gsub(" ", "")
+          oldfather = father
+          father = key['c'][0]['v']
           #puts "Nuevo padre que se pasa a la funcion: "+father
-          obtenerdatos(key['c'][1]['v'], title, father.gsub(" ", ""))
-          father = oldfather.gsub(" ", "")
+          obtenerdatos(key['c'][1]['v'], title, father)
+          father = oldfather
         end
       end
       # puts "\n\nResultados en keys: "

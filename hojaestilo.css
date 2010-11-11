@@ -1,0 +1,61 @@
+body {
+	background-color: #330000;
+}
+
+.data{
+padding:2%;
+border-left: 1px solid #fff;
+}
+
+.result {
+margin-left:2%;
+}
+
+body, td, th, p {
+	color: #FFCC99;
+	font-family: Calibri;
+    font-size:15px;
+	text−align:justify;
+}
+.contenido {
+text-align:center;
+
+   border: 2px solid #fff;
+}
+
+h1 {
+	color: #FF6666;
+	font-family: Calibri;
+    font-size:21px;
+
+}
+
+h2 {
+	color: #FF99CC;
+	font-family: Calibri;
+    font-size:17px;
+}
+
+h3, h4 {
+	color: #CC9999;
+	font-family: Calibri;
+    font-size:15px;
+}
+
+h5, h6 {
+	color: #FFCCCC;
+	font-family: Calibri;
+    font-size:20px;
+}
+
+a {
+	color: #FF0033;
+		font-family: Calibri;
+    font-size:20px;
+}
+
+form {
+	background-color: #990000;
+		font-family: Calibri;
+    font-size:20px;
+}
