@@ -1,5 +1,6 @@
 body {
-	background-color: #330000;
+background:#000000;
+color:#FFFFCC;
 }
 
 .data{
@@ -12,14 +13,15 @@ margin-left:2%;
 }
 
 body, td, th, p {
-	color: #FFCC99;
+	
 	font-family: Calibri;
     font-size:15px;
 	text−align:justify;
 }
-.contenido {
-text-align:center;
 
+
+.contenido {
+   text-align:center;
    border: 2px solid #fff;
 }
 
@@ -27,7 +29,6 @@ h1 {
 	color: #FF6666;
 	font-family: Calibri;
     font-size:21px;
-
 }
 
 h2 {
@@ -55,7 +56,10 @@ a {
 }
 
 form {
-	background-color: #990000;
-		font-family: Calibri;
+	font-family: Calibri;
     font-size:20px;
+	border-style:groove;
+	border:1;
+	border-color:#FFFFCC;
+
 }

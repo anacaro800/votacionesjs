@@ -17,6 +17,8 @@ class Modelo
     @resultados = {}
     @totales_acumulados = {}
   end
+  
+  
 
   def obtenerdatos(key, profundidad, father="colombia")
     resultados_parciales = {}
