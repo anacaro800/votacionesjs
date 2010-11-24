@@ -2,6 +2,13 @@ require "controlador"
 require "vista"
 require "modelo"
 
+ActiveRecord::Base.pluralize_table_names = false
+ActiveRecord::Base.establish_connection(:adapter => "mysql2",
+  :host => "localhost",
+  :username => "root",
+  :password => "root",
+  :database => "votaciones")
+
 class Aplicacion
 
   def call(env)  
