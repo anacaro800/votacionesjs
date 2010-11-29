@@ -1,0 +1,26 @@
+!!!
+%html{:xmlns => "http://www.w3.org/1999/xhtml"}
+  %head
+    %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}/
+    %title Untitled Document
+    %link{:href => "hojaestilo.css", :rel => "stylesheet"}
+    %script{:type => "text/javascript",
+        :src  => "http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"}
+    %script{:type => "text/javascript",
+        :src  => "javascripts/comandos.js"}
+  %body
+    %form#form_edit{:action => "", :method => "PUT", :name => "form_edit"}
+      %p Formulario editar centro
+      %table{:border => "1", :width => "319"}
+        %tr
+          %th{:align => "left", :scope => "col", :width => "106"}
+            %label Nombre
+            %input#name{:name => "nombre", :value => "#{centro.nombre}"}
+            %br/
+            %br/
+            Escoger Ciudad
+            %br/
+            %select#centro{:name => "ciudad"}
+              - ciudades.each do |ciudad|
+                <option #{"selected='selected'" if ciudad.id == centro.ciudad.id}  value=#{ciudad.id}>#{ciudad.nombre} 
+      %input#sub_edit{:name => "submit_edit", :type => "submit", :value => "Guadar"}/

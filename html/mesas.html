@@ -1,0 +1,42 @@
+!!!
+%html{:xmlns => "http://www.w3.org/1999/xhtml"}
+  %head
+    %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}/
+    %title Untitled Document
+    %link{:href => "hojaestilo.css", :rel => "stylesheet"}
+    %script{:type => "text/javascript",
+        :src  => "http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"}
+    %script{:type => "text/javascript",
+        :src  => "javascripts/comandos.js"}
+  %body
+    %div
+      %label
+        Lista de mesas
+        %br/
+        %br/
+      %table{:border => "1", :width => "345"}
+        %tr
+          %th{:scope => "col"} Nombre Mesa
+        - mesas.each do |mesa|
+          %tr
+            %td= mesa.nombre
+            %td
+              %a{:name => "del_#{mesa.id}", :href=>"/mesa/#{mesa.id}"} Eliminar
+            %td
+              %a{:name => "edit_#{mesa.id}", :href=>"/mesa/#{mesa.id}"} Editar
+
+    %div
+      %form#form6{:action => "", :method => "post", :name => "form5"}
+        %p Agregar Mesa
+        %table{:border => "1", :width => "321"}
+          %tr
+            %th{:align => "left", :height => "143", :scope => "col", :valign => "top", :width => "105"}
+              Escoger Centro
+              %br/
+              %select#centro{:name => "centro"}
+                - centros.each do |centro|
+                  <option value=#{centro.id}>#{centro.nombre}
+              %p
+                Nombre Nuevo Mesa
+                %input#nombre_mesa{:name => "nombre", :type => "text"}/
+              %input#submit{:name => "submit", :type => "submit", :value => "Guadar"}/

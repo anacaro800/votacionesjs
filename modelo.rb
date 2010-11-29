@@ -2,6 +2,13 @@ require "rubygems"
 gem "activerecord"
 require 'active_record'
 
+# ActiveRecord::Base.pluralize_table_names = false
+# ActiveRecord::Base.establish_connection(:adapter => "mysql2",
+#   :host => "localhost",
+#   :username => "root",
+#   :password => "root",
+#   :database => "votaciones")
+
 class Pais < ActiveRecord::Base
   set_table_name 'pais'
   has_many :departamento
@@ -45,7 +52,7 @@ end
 # d = Departamento.find_by_id(1)
 # ci = Ciudad.new(:nombre => "medellin", :departamento => d)
 # ci.save
-# ce = Centro.new(:nombre => "plaza", :ciudad => ci)
+# ce = Centro.new(:nombre => "plaza", :ciudad_id => 1)
 # ce.save
 # m = Mesa.new(:nombre => "mesa 1", :centro => ce)
 # m.save
@@ -53,3 +60,7 @@ end
 # candidato.save
 # voto = Voto.new(:mesa => m, :candidato => candidato, :votos => 10)
 # voto.save
+# mesa =  Mesa.find_by_id(4)
+# mesa.votos.each do |v|
+#   puts v.candidato.nombre
+# end

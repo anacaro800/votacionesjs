@@ -1,0 +1,1 @@
+$("#submit_del").ajax({type: "DELETE"});

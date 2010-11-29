@@ -1,0 +1,42 @@
+!!!
+%html{:xmlns => "http://www.w3.org/1999/xhtml"}
+  %head
+    %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}/
+    %title Untitled Document
+    %link{:href => "hojaestilo.css", :rel => "stylesheet"}
+    %script{:type => "text/javascript",
+        :src  => "http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"}
+    %script{:type => "text/javascript",
+        :src  => "javascripts/comandos.js"}
+  %body
+    %div
+      %label
+        Lista de centros
+        %br/
+        %br/
+      %table{:border => "1", :width => "345"}
+        %tr
+          %th{:scope => "col"} Nombre Centro
+        - centros.each do |centro|
+          %tr
+            %td= centro.nombre
+            %td
+              %a{:name => "del_#{centro.id}", :href=>"/centro/#{centro.id}"} Eliminar
+            %td
+              %a{:name => "edit_#{centro.id}", :href=>"/centro/#{centro.id}"} Editar
+
+    %div
+      %form#form6{:action => "", :method => "post", :name => "form5"}
+        %p Agregar Centro
+        %table{:border => "1", :width => "321"}
+          %tr
+            %th{:align => "left", :height => "143", :scope => "col", :valign => "top", :width => "105"}
+              Escoger Ciudad
+              %br/
+              %select#centro{:name => "ciudad"}
+                - ciudades.each do |ciudad|
+                  <option value=#{ciudad.id}>#{ciudad.nombre}
+              %p
+                Nombre Nuevo Centro
+                %input#nombre_centro{:name => "nombre", :type => "text"}/
+              %input#submit{:name => "submit", :type => "submit", :value => "Guadar"}/

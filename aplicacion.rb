@@ -13,47 +13,27 @@ class Aplicacion
 
   def call(env)  
     req = Rack::Request.new(env)
-    modelo = Modelo.new
-    vista = Vista.new(req)
-    controlador = Controlador.new(modelo,vista)
-	
-	 method = env["REQUEST_METHOD"]
-	 tipo=env['PATH_INFO'] 
-	 
-	 if (tipo== "/centro")
-	  status, msg = case method
-              when "POST" then Controlador.Decidir(1)
-              when "DELETE" then Controlador.Decidir(2)
-              when "PUT" then Controlador.Decidir(3)
-              when "GET" then Controlador.Decidir(4)
-              else [400, "Metodo no soportado"]
-	 
-	 end
-	 else if(tipo=="/mesa")
-	  status, msg = case method
-              when "POST" then Controlador.Decidir(5)
-              when "DELETE" then Controlador.Decidir(6)
-              when "PUT" then Controlador.Decidir(7)
-              when "GET" then Controlador.Decidir(8)
-              else [400, "Metodo no soportado"]
-	 end
-	 
-	
-	 
-	 
-	 
-	 
-	
-    if env['PATH_INFO'] == "/"
-      [200, {"Content-Type" => "text/html"}, File.open("form.html")]
-    elsif env['PATH_INFO'] == "/go"
-      res = controlador.controlar
-      [200, {"Content-Type" => "text/html"}, res]
-    elsif env['PATH_INFO'] == "/hojaestilo.css"
-      [200, {"Content-Type" => "text/css"}, File.open("hojaestilo.css")]
-    elsif env['PATH_INFO'] == "/Imagen2.png"
-      [200, {"Content-Type" => "image/png"}, File.open("Imagen2.png")]
-    end
-  end
+    vista = Vista.new()
+    controlador = Controlador.new(vista)
+    method = env["REQUEST_METHOD"]
+    recurso_url = env['PATH_INFO']
 
+    return [200, {"Content-Type" => "text/javascript"}, File.read("comandos.js")] if recurso_url == "/javascripts/comandos.js"
+    recurso_url.slice!(0)
+    puts "URL: "+recurso_url
+    recurso, id = recurso_url.split("/")
+    params = {"id" => id, "data" => req.params}
+    puts params['data']
+
+    status, msg = case method
+                  when "POST" then controlador.post(recurso, params)
+                  when "DELETE" then controlador.delete(recurso, params)
+                  when "PUT" then controlador.put(recurso, params)
+                  when "GET" then controlador.get(recurso, params)
+                  else [400, "Metodo no soportado"]
+                  end
+
+    [status, {"Content-Type" => "text/html"}, msg]
+  end
+  
 end
